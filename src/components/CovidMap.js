@@ -30,8 +30,8 @@ function CovidMap(){
                   position: country.latlng
                 }
               );
+            }
           }
-      }
       );
 
       setMArkers(cases.map(covidcase => (
