@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './CovidMap.css'
-import useInterval from '../utils/useInterval'
-import countries from '../utils/countries.json'
+import useInterval from '../../utils/useInterval'
+import countries from '../../utils/countries.json'
 import { Map, TileLayer, Marker, Tooltip } from "react-leaflet";
 
 
@@ -35,7 +35,7 @@ function CovidMap(){
       );
 
       setMArkers(cases.map(covidcase => (
-        <Marker position={covidcase.position} opacity={0} >
+        <Marker position={covidcase.position} opacity={0} key={covidcase.key}>
           <Tooltip direction="center" className="country-label" permanent><b>{covidcase.cases + '/' + covidcase.today}</b></Tooltip>
         </Marker>
       )))
