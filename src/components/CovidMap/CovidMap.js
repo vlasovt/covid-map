@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './CovidMap.css'
 import useInterval from '../../utils/useInterval'
 import countries from '../../utils/countries.json'
-import { Map, TileLayer, Marker, Tooltip } from "react-leaflet";
+import { Map, TileLayer, Marker, Tooltip,ZoomControl } from "react-leaflet";
 
 
 
@@ -43,13 +43,16 @@ function CovidMap(){
     }, 5000);
 
     return (
-        <Map center={[51.505, -0.09]} zoom={3}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <div>{markers}</div>
-      </Map>
+      <div className="map-container">
+         <Map zoomControl={false} center={[0,0]} zoom={3} boundsOptions={{padding: [0, 0]}}>
+         <ZoomControl position="topright" />
+          <TileLayer
+            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <div>{markers}</div>
+        </Map>
+      </div>
     );
 }
 

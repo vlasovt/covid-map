@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
 import CovidMap from './components/CovidMap/CovidMap';
+import CovidHeader from './components/CovidHeader/CovidHeader'
 
 function App() {
   return (
-    <CovidMap />
+    <div>
+      <CovidHeader/>
+      <CovidMap />
+    </div>
   );
 }
 
