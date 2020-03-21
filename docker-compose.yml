@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-  sample:
+  covidmap:
     container_name: covid-map
     build:
       context: .
