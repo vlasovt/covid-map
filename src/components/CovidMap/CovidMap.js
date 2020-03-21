@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import './CovidMap.css'
 import useInterval from '../../utils/useInterval'
 import countries from '../../utils/countries.json'
+import CovidPopup from '../CovidPopup/CovidPopup'
 import { Map, TileLayer, Marker, Tooltip,ZoomControl } from "react-leaflet";
 
 
-
-function CovidMap(){
+export default function CovidMap(){
 
     const [covidData, setCovidData] = useState([]);
     const [markers, setMArkers] = useState([]);
@@ -25,8 +25,12 @@ function CovidMap(){
               cases.push(
                 {
                   key: cd.country,
+                  country: cd.country,
                   cases: cd.cases,
                   today: cd.todayCases,
+                  deaths: cd.deaths,
+                  todayDeaths: cd.todayDeaths,
+                  casesPerMillion: cd.casesPerOneMillion,
                   position: country.latlng
                 }
               );
@@ -36,6 +40,7 @@ function CovidMap(){
 
       setMArkers(cases.map(covidcase => (
         <Marker position={covidcase.position} opacity={0} key={covidcase.key}>
+          <CovidPopup case={covidcase}/>
           <Tooltip direction="center" className="country-label" permanent><b>{covidcase.cases + '/' + covidcase.today}</b></Tooltip>
         </Marker>
       )))
@@ -55,5 +60,3 @@ function CovidMap(){
       </div>
     );
 }
-
-export default CovidMap;
