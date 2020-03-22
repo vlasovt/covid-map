@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './CovidMap.css'
 import useInterval from '../../utils/useInterval'
 import countries from '../../utils/countries.json'
 import CovidPopup from '../CovidPopup/CovidPopup'
 import { Map, TileLayer, Marker, Tooltip,ZoomControl } from "react-leaflet";
+import classList from '../../utils/classList'
 
 
 export default function CovidMap(){
 
     const [covidData, setCovidData] = useState([]);
-    const [markers, setMArkers] = useState([]);
+    const [markers, setMarkers] = useState([]);
     let cases = [];
 
     useInterval(() => {
@@ -38,10 +39,24 @@ export default function CovidMap(){
           }
       );
 
-      setMArkers(cases.map(covidcase => (
+      setMarkers(cases.map(covidcase => (
         <Marker position={covidcase.position} opacity={0} key={covidcase.key}>
           <CovidPopup case={covidcase}/>
-          <Tooltip direction="center" className="country-label" permanent><b>{covidcase.cases + '/' + covidcase.today}</b></Tooltip>
+          <Tooltip 
+          direction="center" 
+          className={classList({
+            'country-label': true,
+            'zero': covidcase.cases < 1,
+            'less-1000': covidcase.cases < 1000,
+            'from-1000-to-10000': covidcase.cases > 1000 && covidcase.cases < 10000,
+            'from-10000-to-20000': covidcase.cases > 10000 && covidcase.cases < 20000,
+            'from-20000-to-40000': covidcase.cases > 20000 && covidcase.cases < 40000,
+            'from-40000-to-60000': covidcase.cases > 40000 && covidcase.cases < 60000,
+            'more-than-60000': covidcase.cases > 60000
+          })} 
+          permanent>
+            {covidcase.cases + ' / ' + covidcase.today}
+          </Tooltip>
         </Marker>
       )))
 
@@ -52,11 +67,12 @@ export default function CovidMap(){
          <Map zoomControl={false} center={[0,0]} zoom={3} boundsOptions={{padding: [0, 0]}}>
          <ZoomControl position="topright" />
           <TileLayer
-            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+            url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
           />
           <div>{markers}</div>
         </Map>
+      
       </div>
     );
 }

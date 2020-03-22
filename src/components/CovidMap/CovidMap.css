@@ -1,4 +1,34 @@
 .country-label{
-    color: red;
     font-weight: bold;
+    border: 0;
+    padding: 2px;
 }
+.zero{
+    background-color: lightgreen;
+    color: black;
+}
+.less-1000{
+    background-color: #ffe6e6;
+    color: black;
+}
+.from-1000-to-10000{
+    background-color: #ffb3b3;
+    color: black;
+}
+.from-10000-to-20000{
+    background-color: #ff6666;
+    color: black;
+}
+.from-20000-to-40000{
+    background-color: #ff1a1a;
+    color: white;
+}
+.from-40000-to-60000{
+    background-color: #cc0000;
+    color: white;
+}
+.more-than-60000{
+    background-color: #660000;
+    color: white;
+}
+
